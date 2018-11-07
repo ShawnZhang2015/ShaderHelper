@@ -4,8 +4,9 @@ let ShaderEnum = cc.Enum({
 
 let ShaderHelper = cc.Class({
     extends: cc.Component,
-    editor: {
+    editor: CC_EDITOR && {
         executeInEditMode: true,
+        requireComponent: cc.Sprite,
     },
 
     properties: {

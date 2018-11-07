@@ -117,7 +117,7 @@ CustomMaterial.addShader = function(shader) {
         console.log("addShader - shader already exist: ", shader.name);
         return;
     }
-    cc.renderer._forward._programLib.define(shader.name, shader.vert, shader.frag, shader.defines);
+    cc.renderer._forward._programLib.define(shader.name, shader.vert, shader.frag, shader.defines || []);
     g_shaders[shader.name] = shader;
 }
 //取Shader的定义

@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.3359375,
-      "y": 0.3359375,
+      "x": 0.5703125,
+      "y": 0.5703125,
       "z": 1
     },
     "_quat": {
@@ -362,7 +362,7 @@
     "_skewY": 0,
     "_zIndex": 0,
     "groupIndex": 0,
-    "_id": "b2aDsm5p1J05kH+75dDLhK"
+    "_id": "f4mMchSLFDoYSzHlT2NhSX"
   },
   {
     "__type__": "cc.Sprite",
@@ -390,7 +390,7 @@
     "_isTrimmedMode": true,
     "_state": 0,
     "_atlas": null,
-    "_id": "06vBtwTbVEOY/L7ku+0pyo"
+    "_id": "f63uxFGCBOZLtKYvrjW/hg"
   },
   {
     "__type__": "709843sfttBuKuT6Fl9RqBp",
@@ -402,7 +402,7 @@
     "_enabled": true,
     "_shaderObject": null,
     "_N$program": 0,
-    "_id": "edYocSqW5CX5HKwN56hDLt"
+    "_id": "6aZBKZFR1MQLLi41oz2xOZ"
   },
   {
     "__type__": "cc.Canvas",
