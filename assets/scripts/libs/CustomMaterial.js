@@ -35,24 +35,28 @@ var CustomMaterial = (function (Material$$1) {
 		);
 
 		this.name = shaderName;
-		this._color = { r: 1, g: 1, b: 1, a: 1 };
+		
 		this._effect = new renderer.Effect(
-			[
-				mainTech
-			],
-			{},
+			[ mainTech ],
+            {},
 			defines,
-		);
+        );
+        this._texture = null;
+        this._color = { r: 1, g: 1, b: 1, a: 1 };
 
 		this._mainTech = mainTech;
-		this._texture = null;
 	}
 
-	if (Material$$1) CustomMaterial.__proto__ = Material$$1;
-	CustomMaterial.prototype = Object.create(Material$$1 && Material$$1.prototype);
-	CustomMaterial.prototype.constructor = CustomMaterial;
+	// if (Material$$1) CustomMaterial.__proto__ = Material$$1;
+	// CustomMaterial.prototype = Object.create(Material$$1 && Material$$1.prototype);
+    // CustomMaterial.prototype.constructor = CustomMaterial;
+    cc.js.extend(CustomMaterial, Material$$1);
 
-	var prototypeAccessors = { effect: { configurable: true }, texture: { configurable: true }, color: { configurable: true } };
+	var prototypeAccessors = { 
+        effect:  { configurable: true }, 
+        texture: { configurable: true }, 
+        color:   { configurable: true } 
+    };
 
 	prototypeAccessors.effect.get = function () {
 		return this._effect;
