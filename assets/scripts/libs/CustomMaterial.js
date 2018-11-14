@@ -121,8 +121,17 @@ CustomMaterial.addShader = function(shader) {
         console.log("addShader - shader already exist: ", shader.name);
         return;
     }
-    cc.renderer._forward._programLib.define(shader.name, shader.vert, shader.frag, shader.defines || []);
-    g_shaders[shader.name] = shader;
+
+    if (cc.renderer._forward) {
+        cc.renderer._forward._programLib.define(shader.name, shader.vert, shader.frag, shader.defines || []);
+        g_shaders[shader.name] = shader;
+    } else {
+        //在微信上初始时cc.renderer._forward不存在，需要等引擎初始化完毕才能使用
+        cc.game.once(cc.game.EVENT_ENGINE_INITED, function () {
+            cc.renderer._forward._programLib.define(shader.name, shader.vert, shader.frag, shader.defines || []);
+            g_shaders[shader.name] = shader;
+        });
+    }
 }
 //取Shader的定义
 CustomMaterial.getShader = function(name) {
