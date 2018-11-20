@@ -80,3 +80,5 @@ let ShaderHelper = cc.Class({
         }
     },
 });
+
+module.exports = ShaderHelper;
