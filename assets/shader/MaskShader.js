@@ -1,12 +1,14 @@
 const renderEngine = cc.renderer.renderEngine;
 const renderer = renderEngine.renderer;
+let CustomMaterial = require('CustomMaterial');
 
 const shader = {
-    name: 'mask',
+    name: 'Mask',
     params: [
-        { name: 'u_edge', type: renderer.PARAM_FLOAT, defaultValue: 0.5 },
+        {name: 'u_edge', type: renderer.PARAM_FLOAT, defaultValue: 0.5},
     ],
     defines:[],
+
 
     vert: `
         uniform mat4 viewProj;
@@ -21,59 +23,63 @@ const shader = {
 
     frag:
         `
-        uniform sampler2D u_texture;
-        uniform float u_edge;
+        uniform sampler2D texture;
         varying vec2 uv0;
-
+    
+        uniform float u_edge;
+    
         void main()
-        { 
+        {
+            float edge = u_edge;
             float dis = 0.0;
-            if (uv0.x < u_edge)
+            vec2 texCoord = uv0;
+            if ( texCoord.x < edge )
             {
-                if (uv0.y < u_edge)
+                if ( texCoord.y < edge )
                 {
-                    dis = distance(uv0, vec2(u_edge, u_edge));
+                    dis = distance( texCoord, vec2(edge, edge) );
                 }
-                if (uv0.y > (1.0 - u_edge))
+                if ( texCoord.y > (1.0 - edge) )
                 {
-                    dis = distance(uv0, vec2(u_edge, (1.0 - u_edge)));
+                    dis = distance( texCoord, vec2(edge, (1.0 - edge)) );
                 }
             }
-            else if (uv0.x > (1.0 - u_edge))
+            else if ( texCoord.x > (1.0 - edge) )
             {
-                if (uv0.y < u_edge)
+                if ( texCoord.y < edge )
                 {
-                    dis = distance(uv0, vec2((1.0 - u_edge), u_edge));
+                    dis = distance( texCoord, vec2((1.0 - edge), edge ) );
                 }
-                if (uv0.y > (1.0 - u_edge))
+                if ( texCoord.y > (1.0 - edge) )
                 {
-                    dis = distance(uv0, vec2((1.0 - u_edge), (1.0 - u_edge)));
+                    dis = distance( texCoord, vec2((1.0 - edge), (1.0 - edge) ) );
                 }
             }
-
+      
             if(dis > 0.001)
             {
-                float gap = u_edge * 0.02;
-                if(dis <= u_edge - gap)
+                // 外圈沟
+                float gap = edge * 0.02;
+                if(dis <= edge - gap)
                 {
-                    gl_FragColor = texture2D(u_texture, uv0);
+                    gl_FragColor = texture2D( texture,texCoord);
                 }
-                else if(dis <= u_edge)
+                else if(dis <= edge)
                 {
-                    float t = smoothstep(0., gap, u_edge - dis);
-                    vec4 color = texture2D(u_texture, uv0).rgba;
-                    color.a = color.a * t;
-                    gl_FragColor = color;
+                    // 平滑过渡
+                    float t = smoothstep(0.,gap,edge-dis);
+                    vec4 color = texture2D( texture,texCoord);
+                    gl_FragColor = vec4(color.rgb,t);
                 }else{
-                    gl_FragColor = vec4(0., 0., 0., 0.);
+                    gl_FragColor = vec4(0.,0.,0.,0.);
                 }
             }
             else
             {
-                gl_FragColor = texture2D(u_texture, uv0);
+                gl_FragColor = texture2D( texture,texCoord);
             }
-        }`,
+        }
+        `,
 };
 
-let CustomMaterial = require('CustomMaterial');
 CustomMaterial.addShader(shader);

@@ -2,11 +2,12 @@ let ShaderHelper = require('ShaderHelper');
 cc.Class({
     extends: cc.Component,
     properties: {
-      
+      label: cc.Label,
     },
 
     start () {
-
+        //this.label.setState(1);
+        cc.log(this.label);
     },
 
     createSprite() {
